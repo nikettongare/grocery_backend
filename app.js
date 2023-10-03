@@ -1,4 +1,5 @@
 const result = require("dotenv").config();
+const cors = require("cors");
 
 if (result.error) {
   console.log(result.error);
@@ -25,6 +26,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+
+const corsOptions = {
+  credentials: true,
+  origin: true,
+  allowedHeaders:
+      "Accept, Origin, X-Requested-With, x-auth-token, X-Auth-Token, Authorization, Content-Type, content-type, Cache-Control, Access-Control-Allow-Origin",
+};
+
+app.use(cors(corsOptions));
+
 
 app.use("/", indexRouter);
 userRouter.routesConfig(app);
